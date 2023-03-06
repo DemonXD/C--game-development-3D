@@ -1,25 +1,16 @@
-project(Game)
+cmake_minimum_required(VERSION 3.10)
+project(GameExample)
 
-# 设定变量
-# set（SRC main.cc ...)
+find_package(SDL2 REQUIRED)
 
-# 添加头文件搜索路径， 等效 g++ -I
-# include_directories(... ...)
+set(CMAKE_CXX_STANDARD 11)
 
-# 生成共享库文件: libgame.so
-# add_library(game SHARED ${SRC})
+aux_source_directory(. DIR_SRCS)
 
-# 添加编译参数
-# add_compile_options(-Wall -std=c++11 -02 ...)
+add_subdirectory(./src/Engine)
 
-# 生成可执行文件
-# add_executable(main main.cc ...)
+add_executable(Game main.cc)
 
-# 为target 添加共享库， 等效 g++ -l
-# target_link_libraries(main game)
+target_link_libraries(Game LIB_Engine)
 
-# 向工程中添加存放源文件的子目录
-# add_subdirectory(src)
-
-# 发现一个目录下所有源代码文件并将列表存储在一个变量中，这个指令临时被用来自动构建源文件列表
-# aux_source_directory(. SRC)
+target_link_libraries(Game ${SDL2_LIBRARIES})
