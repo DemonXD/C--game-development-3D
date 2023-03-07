@@ -105,11 +105,26 @@ void Engine::GenerateOutput()
     // 互换前台缓冲区和后台缓冲区
     SDL_SetRenderDrawColor(
         m_pRenderer,
-        0,
-        0,
+        255,
+        255,
         255,
         255
     );
+    SDL_Rect wall{
+        0, 0, 1024, 15
+    };
+
+    struct Vector2{
+        float x;
+        float y;
+    };
+
+    SDL_Rect ball{
+        static_cast<int>(mBallPos.x - thickness/2),
+        static_cast<int>(mBallPos.y - thickness/2),
+        thickness,
+        thickness
+    };
 
     SDL_RenderClear(m_pRenderer);
     SDL_RenderPresent(m_pRenderer);
