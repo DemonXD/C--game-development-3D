@@ -30,7 +30,11 @@ class Engine
         SDL_Window* m_pWindow;
         SDL_Renderer* m_pRenderer;
         Vector2 mBallPos;
-        Vector2 addlePos;
+        Vector2 mPaddlePos;
+        // 增量时间
+        Uint32 mTicksCount;
+        // 物体位置
+        Uint8 mPaddleDir;
 };
 
 

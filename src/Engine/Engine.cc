@@ -6,6 +6,7 @@ Engine::Engine()
     m_pWindow = nullptr;
     m_pRenderer = nullptr;
     isRunning = true;
+    mTicksCount = 0;
 }
 
 Engine::~Engine()
@@ -84,17 +85,42 @@ void Engine::ProcessInput()
             break;
         }
     }
-    /* for capture keyboard event
-    const Uint8* stat = SDL_GetKeyboardState(NULL);
-    if (stat[SDL_SCANCODE_ESCAPE])
+    // for capture keyboard event
+    // 更新游戏世界中的对象
+    mPaddleDir = 0;
+    // for capture keyboard event
+    const Uint8* move_stat = SDL_GetKeyboardState(NULL);
+    if (move_stat[SDL_SCANCODE_W])
     {
-        isRunning = false;
+        mPaddleDir = -1; // UP
     }
-    */
+    if (move_stat[SDL_SCANCODE_S])
+    {
+        mPaddleDir = 1; // DOWN
+    }
+    
 }
 
 void Engine::UpdateGame()
 {
+    // 限制帧更新为16ms
+    while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
+    
+    // 获取SDL ticks到上次获取的时间间隔
+    float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+
+    // 固定deltaTime的值
+    if (deltaTime > 0.05f)
+    {
+        deltaTime = 0.05f;
+    }
+
+    if (mPaddleDir != 0)
+    {
+        mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
+        // 边界控制
+        // TODO:
+    }
 
 }
 
@@ -105,18 +131,13 @@ void Engine::GenerateOutput()
     // 互换前台缓冲区和后台缓冲区
     SDL_SetRenderDrawColor(
         m_pRenderer,
-        255,
-        255,
-        255,
+        0,
+        0,
+        0,
         255
     );
     SDL_Rect wall{
-        0, 0, 1024, 15
-    };
-
-    struct Vector2{
-        float x;
-        float y;
+        0, 0, 1024, thickness
     };
 
     SDL_Rect ball{
