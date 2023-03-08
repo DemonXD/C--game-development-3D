@@ -7,4 +7,4 @@ if (SDL2_FOUND)
     include_directories(${SDL2_INCLUDE_DIRS})
 endif(SDL2_FOUND)
 
-target_link_libraries(${LIB_Engine} ${SDL2_LIBRARIES})
+target_link_libraries(LIB_Engine ${SDL2_LIBRARIES})
