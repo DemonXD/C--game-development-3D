@@ -4,6 +4,9 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+#define WINDOW_WIDTH 800
+#define WIDNOW_HEIGHT 640
+
 
 struct Vector2
 {

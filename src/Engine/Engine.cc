@@ -25,8 +25,8 @@ bool Engine::Initialize()
         "Game Example",
         100,  // top left x-coordinate of window
         100,  // top left y-coordinate of window
-        1024, // width of window
-        768,  // height of window
+        WINDOW_WIDTH, // width of window
+        WIDNOW_HEIGHT,  // height of window
         0     // flags
     );
 
@@ -136,17 +136,35 @@ void Engine::GenerateOutput()
         0,
         255
     );
+
+    SDL_RenderClear(m_pRenderer);
+
+    // 指定当前缓冲区的底色
+    SDL_SetRenderDrawColor(
+        m_pRenderer,
+        255,
+        255,
+        255,
+        255
+    );
+
+    // draw game item
     SDL_Rect wall{
-        0, 0, 1024, thickness
+        5, 
+        static_cast<int>((WIDNOW_HEIGHT - 200)/2), 
+        thickness, 
+        200
     };
 
     SDL_Rect ball{
-        static_cast<int>(mBallPos.x - thickness/2),
-        static_cast<int>(mBallPos.y - thickness/2),
+        static_cast<int>((WINDOW_WIDTH - thickness)/2),
+        static_cast<int>((WIDNOW_HEIGHT - thickness)/2),
         thickness,
         thickness
     };
 
-    SDL_RenderClear(m_pRenderer);
+    SDL_RenderFillRect(m_pRenderer, &wall);
+    SDL_RenderFillRect(m_pRenderer, &ball);
+
     SDL_RenderPresent(m_pRenderer);
 }
